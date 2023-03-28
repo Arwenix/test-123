@@ -91,6 +91,9 @@ d3 <- read.csv("round3.csv")
 m1 <- lm(CollectiveBenefit-1~1, d2)
 summary(m1) # Nope
 
+
+test <- seq(1,5)
+
 ```
 
 
