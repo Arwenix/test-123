@@ -1,0 +1,96 @@
+---
+title: "Scrabble Exercise"
+author: "Parola Alberto"
+date: "14/02/2022"
+output: html_document
+---
+
+
+Exercise 1) 
+- Load the three datasets (two individual rounds and one collaboration round)
+- Run cleaning 
+- Calculate the number of same words (provided), same-words-ratio, similarity and collective benefit 
+- Did your group perform better than the best individual? 
+
+```{r}
+
+pacman::p_load(
+  tidyverse,
+  here
+)
+tidyverse_deps(recursive = FALSE, repos = getOption("repos"))
+
+rm(list=ls())
+
+devtools::install_github("tidyverse/tidyverse")
+
+
+d1 <- read_csv("data")
+d2 <- read_csv("data2")
+d3 <- read.csv("data3")
+
+###Clean up 
+
+#Remove incorrect words 
+d1 = d1[d1$Validity ==1,]
+d2 = d2[d2$Validity == 1,]
+d3 = d3[d3$Validity == 1,]
+
+#Remove duplicates 
+d1 <- d1[!duplicated(d1[,'Word']),]
+d2 <- d2[!duplicated(d2[,'Word']),]
+d3 <- d3[!duplicated(d3[,'Word']),]
+
+######################## Calculations #########################
+
+#Same words (produced by each individual)
+
+same_words <- 0
+
+for (i in 1:nrow(d1)){
+  if (d1$Word[i] %in% d2$Word){
+    same_words = same_words+1
+  }
+}
+same_words <- same_words
+
+#Same-words ratio 
+
+#Similarity 
+
+#Collective benefit 
+
+
+```
+
+
+Exercise 2) 
+
+Load the three datasets in the zip folder (round1.csv, round2.csv, round3.csv)
+
+Create linear models investigating hypotheses you find interesting regarding: 
+ - effects on Collective Benefit 
+ - effects on Diversity 
+ - effects on Similarity 
+ - Did collaboration change the diversity/similarity of the pairs? (use data from round 3)
+
+Create plots to inspect the results.  
+
+```{r setup, include=FALSE}
+###Load data 
+#Round 1) Individual task 
+d1 <- read.csv("round1.csv")
+
+#Round 2) Group task 
+d2 <- read.csv("round2.csv")
+
+#Round 3) Individual performance combined into groups 
+d3 <- read.csv("round3.csv")
+
+#Are groups better than the best of individuals? Is collective benefit > 1?
+m1 <- lm(CollectiveBenefit-1~1, d2)
+summary(m1) # Nope
+
+```
+
+
